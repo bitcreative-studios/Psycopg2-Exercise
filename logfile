@@ -149,3 +149,11 @@
 2019-11-11 21:28:34.357 AEDT [11584] ERROR:  syntax error at or near "d" at character 1
 2019-11-11 21:28:34.357 AEDT [11584] STATEMENT:  d
 	;
+2019-11-11 22:00:00.189 AEDT [12987] ERROR:  column reference "quota" is ambiguous at character 28
+2019-11-11 22:00:00.189 AEDT [12987] STATEMENT:  SELECT ct.name, c.tag, sum(quota), count(distinct person_id)
+	FROM Classes c 
+	JOIN ClassTypes ct on ct.id = c.type_id
+	JOIN Class_Enrolments ce on ce.class_id = c.id
+	JOIN Courses co on co.id = c.course_id
+	WHERE co.term_id = 5199
+	GROUP BY ct.name, c.tag;
