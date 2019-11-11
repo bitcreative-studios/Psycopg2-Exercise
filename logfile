@@ -74,3 +74,78 @@
 2019-11-11 17:49:53.888 AEDT [7377] STATEMENT:  SELECT (unique code) 
 	    FROM Subjects s
 	    ORDER BY code;
+2019-11-11 18:55:55.083 AEDT [8829] ERROR:  missing FROM-clause entry for table "course" at character 181
+2019-11-11 18:55:55.083 AEDT [8829] STATEMENT:  SELECT b.name, s.code
+	From Meetings m
+	JOIN Rooms r on m.room_id = r.id 
+	JOIN Buildings b on r.within = b.id
+	JOIN Classes cl on m.class_id = cl.id
+	JOIN Courses co on cl.course_id = Course.id
+	JOIN Subjects s on co.subject_id = s.id
+	ORDER BY b.name;
+2019-11-11 18:57:34.667 AEDT [8829] ERROR:  syntax error at or near "WHERE" at character 251
+2019-11-11 18:57:34.667 AEDT [8829] STATEMENT:  SELECT b.name, s.code
+	From Meetings m
+	JOIN Rooms r on m.room_id = r.id 
+	JOIN Buildings b on r.within = b.id
+	JOIN Classes cl on m.class_id = cl.id
+	JOIN Courses co on cl.course_id = co.id
+	JOIN Subjects s on co.subject_id = s.id
+	GROUP BY b.name, s.code
+	WHERE s.code like 'SOLA%'
+	ORDER BY b.name;
+2019-11-11 19:38:45.930 AEDT [6690] LOG:  received fast shutdown request
+2019-11-11 19:38:45.931 AEDT [6690] LOG:  aborting any active transactions
+2019-11-11 19:38:45.932 AEDT [6690] LOG:  background worker "logical replication launcher" (PID 6697) exited with exit code 1
+2019-11-11 19:38:45.932 AEDT [6692] LOG:  shutting down
+2019-11-11 19:38:45.942 AEDT [6690] LOG:  database system is shut down
+2019-11-11 20:38:20.649 AEDT [9771] LOG:  listening on IPv6 address "::1", port 5432
+2019-11-11 20:38:20.650 AEDT [9771] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-11-11 20:38:20.650 AEDT [9771] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-11-11 20:38:20.672 AEDT [9772] LOG:  database system was shut down at 2019-11-11 19:38:45 AEDT
+2019-11-11 20:38:20.678 AEDT [9771] LOG:  database system is ready to accept connections
+2019-11-11 21:27:35.737 AEDT [11584] ERROR:  syntax error at or near "ce" at character 37
+2019-11-11 21:27:35.737 AEDT [11584] STATEMENT:  SELECT t.name, s.code, c.count(uniq ce.person_id)
+	FROM Course_Enrolment ce 
+	JOIN Courses c on ce.course_id = c.id
+	JOIN Subjects s on c.subject_id = s.id
+	JOIN Terms t on t.id = c.term_id
+	GROUP BY t.name, s.code;
+2019-11-11 21:27:36.348 AEDT [11584] ERROR:  syntax error at or near "ORDER" at character 1
+2019-11-11 21:27:36.348 AEDT [11584] STATEMENT:  ORDER BY t.name, s.code;
+2019-11-11 21:27:43.340 AEDT [11584] ERROR:  syntax error at or near "ce" at character 37
+2019-11-11 21:27:43.340 AEDT [11584] STATEMENT:  SELECT t.name, s.code, c.count(uniq ce.person_id)
+	FROM Course_Enrolment ce 
+	JOIN Courses c on ce.course_id = c.id
+	JOIN Subjects s on c.subject_id = s.id
+	JOIN Terms t on t.id = c.term_id
+	GROUP BY t.name, s.code;
+2019-11-11 21:28:00.047 AEDT [11584] ERROR:  syntax error at or near "ORDER" at character 1
+2019-11-11 21:28:00.047 AEDT [11584] STATEMENT:  ORDER BY t.name, s.code
+	SELECT t.name, s.code, c.count(uniq ce.person_id)
+	FROM Course_Enrolment ce 
+	JOIN Courses c on ce.course_id = c.id
+	JOIN Subjects s on c.subject_id = s.id
+	JOIN Terms t on t.id = c.term_id
+	GROUP BY t.name, s.code
+	ORDER BY t.name, s.code;
+2019-11-11 21:28:17.420 AEDT [11584] ERROR:  syntax error at or near "ce" at character 35
+2019-11-11 21:28:17.420 AEDT [11584] STATEMENT:  SELECT t.name, s.code, count(uniq ce.person_id)
+	FROM Course_Enrolment ce 
+	JOIN Courses c on ce.course_id = c.id
+	JOIN Subjects s on c.subject_id = s.id
+	JOIN Terms t on t.id = c.term_id
+	GROUP BY t.name, s.code
+	ORDER BY t.name, s.code;
+2019-11-11 21:28:28.078 AEDT [11584] ERROR:  relation "course_enrolment" does not exist at character 49
+2019-11-11 21:28:28.078 AEDT [11584] STATEMENT:  SELECT t.name, s.code, count(ce.person_id)
+	FROM Course_Enrolment ce 
+	JOIN Courses c on ce.course_id = c.id
+	JOIN Subjects s on c.subject_id = s.id
+	JOIN Terms t on t.id = c.term_id
+	GROUP BY t.name, s.code
+	ORDER BY t.name, s.code
+	;
+2019-11-11 21:28:34.357 AEDT [11584] ERROR:  syntax error at or near "d" at character 1
+2019-11-11 21:28:34.357 AEDT [11584] STATEMENT:  d
+	;
