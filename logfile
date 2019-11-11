@@ -1,0 +1,52 @@
+2019-11-11 14:35:33.555 AEDT [3301] LOG:  listening on IPv6 address "::1", port 5432
+2019-11-11 14:35:33.555 AEDT [3301] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-11-11 14:35:33.556 AEDT [3301] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-11-11 14:35:33.580 AEDT [3302] LOG:  database system was shut down at 2019-11-11 13:47:12 AEDT
+2019-11-11 14:35:33.585 AEDT [3301] LOG:  database system is ready to accept connections
+2019-11-11 14:38:12.876 AEDT [3344] ERROR:  syntax error at or near "SELECT" at character 24
+2019-11-11 14:38:12.876 AEDT [3344] STATEMENT:  SELECT s.code, c.quota
+	SELECT s.code, c.quota
+	From Courses c
+	JOIN Subjects s on c.subject_id = s.id
+	WHERE c.term_id = 5199
+	Order by c.quota;
+2019-11-11 14:40:22.452 AEDT [3344] ERROR:  syntax error at or near "WHERE" at character 172
+2019-11-11 14:40:22.452 AEDT [3344] STATEMENT:  SELECT s.code, c.quota, count(ce.person_id)
+	From Courses c
+	JOIN Subjects s on c.subject_id = s.id
+	JOIN Course_Enrolment ce on c.id = ce.course_id
+	GROUP BY c.id,course_id 
+	WHERE c.term_id = 5199
+	ORDER BY c.quota desc;
+2019-11-11 14:40:35.492 AEDT [3344] ERROR:  relation "course_enrolment" does not exist at character 104
+2019-11-11 14:40:35.492 AEDT [3344] STATEMENT:  SELECT s.code, c.quota, count(ce.person_id)
+	From Courses c
+	JOIN Subjects s on c.subject_id = s.id
+	JOIN Course_Enrolment ce on c.id = ce.course_id
+	WHERE c.term_id = 5199
+	GROUP BY c.id,course_id 
+	ORDER BY c.quota desc;
+2019-11-11 14:40:57.016 AEDT [3344] ERROR:  column "s.code" must appear in the GROUP BY clause or be used in an aggregate function at character 8
+2019-11-11 14:40:57.016 AEDT [3344] STATEMENT:  SELECT s.code, c.quota, count(ce.person_id)
+	From Courses c
+	JOIN Subjects s on c.subject_id = s.id
+	JOIN Course_Enrolments ce on c.id = ce.course_id
+	WHERE c.term_id = 5199
+	GROUP BY c.id,course_id 
+	ORDER BY c.quota desc;
+2019-11-11 14:42:57.851 AEDT [3344] ERROR:  aggregate functions are not allowed in WHERE at character 185
+2019-11-11 14:42:57.851 AEDT [3344] STATEMENT:  SELECT s.code, c.quota, count(ce.person_id)
+	From Courses c
+	JOIN Subjects s on c.subject_id = s.id
+	JOIN Course_Enrolments ce on c.id = ce.course_id
+	WHERE c.term_id = 5199 and c.quota < count(ce.person_id)
+	GROUP BY c.id,course_id, s.code;
+2019-11-11 14:50:20.465 AEDT [3881] ERROR:  syntax error at or near "andc" at character 176
+2019-11-11 14:50:20.465 AEDT [3881] STATEMENT:  
+	    SELECT s.code, c.quota, count(ce.person_id)
+		From Courses c
+		JOIN Subjects s on c.subject_id = s.id
+		JOIN Course_Enrolments ce on c.id = ce.course_id
+		WHERE c.quota > 50 andc.term_id = 5199 
+		GROUP BY c.id,course_id, s.code
+		
