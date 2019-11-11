@@ -50,3 +50,27 @@
 		WHERE c.quota > 50 andc.term_id = 5199 
 		GROUP BY c.id,course_id, s.code
 		
+2019-11-11 15:35:34.655 AEDT [3301] LOG:  received fast shutdown request
+2019-11-11 15:35:34.655 AEDT [3301] LOG:  aborting any active transactions
+2019-11-11 15:35:34.656 AEDT [3301] LOG:  background worker "logical replication launcher" (PID 3308) exited with exit code 1
+2019-11-11 15:35:34.656 AEDT [3303] LOG:  shutting down
+2019-11-11 15:35:34.667 AEDT [3301] LOG:  database system is shut down
+2019-11-11 17:39:20.753 AEDT [6690] LOG:  listening on IPv6 address "::1", port 5432
+2019-11-11 17:39:20.753 AEDT [6690] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-11-11 17:39:20.754 AEDT [6690] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-11-11 17:39:20.773 AEDT [6691] LOG:  database system was shut down at 2019-11-11 15:35:34 AEDT
+2019-11-11 17:39:20.784 AEDT [6690] LOG:  database system is ready to accept connections
+2019-11-11 17:46:01.107 AEDT [7140] FATAL:  lock file "postmaster.pid" already exists
+2019-11-11 17:46:01.107 AEDT [7140] HINT:  Is another postmaster (PID 6690) running in data directory "/Users/katrinading/db"?
+2019-11-11 17:49:14.894 AEDT [7339] ERROR:  syntax error at or near "code" at character 15
+2019-11-11 17:49:14.894 AEDT [7339] STATEMENT:  SELECT unique(code) 
+	    FROM Subjects s
+	    ORDER BY code;
+2019-11-11 17:49:39.709 AEDT [7377] ERROR:  syntax error at or near "code" at character 15
+2019-11-11 17:49:39.709 AEDT [7377] STATEMENT:  SELECT UNIQUE code 
+	    FROM Subjects s
+	    ORDER BY code;
+2019-11-11 17:49:53.888 AEDT [7377] ERROR:  syntax error at or near "code" at character 16
+2019-11-11 17:49:53.888 AEDT [7377] STATEMENT:  SELECT (unique code) 
+	    FROM Subjects s
+	    ORDER BY code;

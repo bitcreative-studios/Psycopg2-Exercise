@@ -1,5 +1,3 @@
-import re
-
 import ass3
 conn = ass3.connect()
 
