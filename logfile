@@ -157,3 +157,90 @@
 	JOIN Courses co on co.id = c.course_id
 	WHERE co.term_id = 5199
 	GROUP BY ct.name, c.tag;
+2019-11-12 01:03:55.177 AEDT [18793] ERROR:  column "hour" does not exist at character 33
+2019-11-12 01:03:55.177 AEDT [18793] STATEMENT:  SELECT r.code, t.name, datediff(hour, m.end_time,m.start_time), m.weeks_binary
+	FROM Rooms r
+	JOIN Meetings m on m.room_id = r.id
+	JOIN Classes c on c.id = m.class_id
+	JOIN Courses co on co.id = c.course_id
+	JOIN Terms t on co.term_id = t.id
+	WHERE r.code like 'K-%'
+	GROUP BY r.code, t.name, m.start_time, m.end_time, m.weeks_binary
+	ORDER BY r.code;
+2019-11-12 01:08:32.237 AEDT [18793] ERROR:  syntax error at or near "SELECT" at character 370
+2019-11-12 01:08:32.237 AEDT [18793] STATEMENT:  SELECT r.code, t.name, m.start_time, m.end_time, (m.end_time-m.start_time) as length, m.weeks_binary
+	FROM Rooms r
+	JOIN Meetings m on m.room_id = r.id
+	JOIN Classes c on c.id = m.class_id
+	JOIN Courses co on co.id = c.course_id
+	JOIN Terms t on co.term_id = t.id
+	WHERE t.name = '19T3' and r.code like 'K-%'
+	GROUP BY r.code, t.name, m.start_time, m.end_time, m.weeks_binary
+	SELECT r.code,     m.start_time, m.end_time, (m.end_time-m.start_time) as length, m.weeks_binary
+	FROM Rooms r
+	JOIN Meetings m on m.room_id = r.id
+	JOIN Classes c on c.id = m.class_id
+	JOIN Courses co on co.id = c.course_id
+	JOIN Terms t on co.term_id = t.id
+	WHERE t.name = '19T3' and r.code like 'K-%'
+	GROUP BY r.code, t.name, m.start_time, m.end_time, m.weeks_binary
+	ORDER BY r.code;
+2019-11-12 01:30:07.169 AEDT [20107] ERROR:  column "m.end_time" must appear in the GROUP BY clause or be used in an aggregate function at character 17
+2019-11-12 01:30:07.169 AEDT [20107] STATEMENT:  SELECT r.code, (m.end_time-m.start_time) as length, m.weeks_binary
+	    FROM Rooms r
+	    JOIN Meetings m on m.room_id = r.id
+	    JOIN Classes c on c.id = m.class_id
+	    JOIN Courses co on co.id = c.course_id
+	    JOIN Terms t on co.term_id = t.id
+	    WHERE t.name = '{}' and r.code like 'K-%'
+	    GROUP BY r.code, t.name, m.weeks_binary
+	;
+2019-11-12 01:30:15.044 AEDT [20107] ERROR:  column "m.end_time" must appear in the GROUP BY clause or be used in an aggregate function at character 17
+2019-11-12 01:30:15.044 AEDT [20107] STATEMENT:  SELECT r.code, (m.end_time-m.start_time) as length, m.weeks_binary
+	    FROM Rooms r
+	    JOIN Meetings m on m.room_id = r.id
+	    JOIN Classes c on c.id = m.class_id
+	    JOIN Courses co on co.id = c.course_id
+	    JOIN Terms t on co.term_id = t.id
+	    WHERE t.name = '19T3' and r.code like 'K-%'
+	    GROUP BY r.code, t.name, m.weeks_binary
+	;
+2019-11-12 01:30:53.631 AEDT [20107] ERROR:  column "m.start_time" must appear in the GROUP BY clause or be used in an aggregate function at character 28
+2019-11-12 01:30:53.631 AEDT [20107] STATEMENT:  SELECT r.code, (m.end_time-m.start_time) as length, m.weeks_binary
+	    FROM Rooms r
+	    JOIN Meetings m on m.room_id = r.id
+	    JOIN Classes c on c.id = m.class_id
+	    JOIN Courses co on co.id = c.course_id
+	    JOIN Terms t on co.term_id = t.id
+	    WHERE t.name = '19T3' and r.code like 'K-%'
+	    GROUP BY r.code, t.name, m.weeks_binary, m.end_time
+	    ORDER BY r.code;
+2019-11-12 01:31:28.260 AEDT [20170] ERROR:  column "m.end_time" must appear in the GROUP BY clause or be used in an aggregate function at character 19
+2019-11-12 01:31:28.260 AEDT [20170] STATEMENT:  
+		SELECT r.code, (m.end_time-m.start_time) as length, m.weeks_binary
+		FROM Rooms r
+		JOIN Meetings m on m.room_id = r.id
+		JOIN Classes c on c.id = m.class_id
+		JOIN Courses co on co.id = c.course_id
+		JOIN Terms t on co.term_id = t.id
+		WHERE t.name = '19T1' and r.code like 'K-%'
+		GROUP BY r.code, t.name, m.weeks_binary
+		ORDER BY r.code
+		
+2019-11-12 01:52:08.055 AEDT [9771] LOG:  received fast shutdown request
+2019-11-12 01:52:08.056 AEDT [9771] LOG:  aborting any active transactions
+2019-11-12 01:52:08.057 AEDT [9771] LOG:  background worker "logical replication launcher" (PID 9778) exited with exit code 1
+2019-11-12 01:52:08.058 AEDT [9773] LOG:  shutting down
+2019-11-12 01:52:08.080 AEDT [9771] LOG:  database system is shut down
+2019-11-12 10:23:56.725 AEDT [21756] LOG:  listening on IPv6 address "::1", port 5432
+2019-11-12 10:23:56.726 AEDT [21756] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-11-12 10:23:56.726 AEDT [21756] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-11-12 10:23:56.750 AEDT [21757] LOG:  database system was shut down at 2019-11-12 01:52:08 AEDT
+2019-11-12 10:23:56.761 AEDT [21756] LOG:  database system is ready to accept connections
+2019-11-12 11:13:27.487 AEDT [25602] FATAL:  database "katrinading" does not exist
+2019-11-12 11:13:40.140 AEDT [25640] FATAL:  database "q6helper.sql" does not exist
+2019-11-12 12:32:45.256 AEDT [21756] LOG:  received fast shutdown request
+2019-11-12 12:32:45.256 AEDT [21756] LOG:  aborting any active transactions
+2019-11-12 12:32:45.257 AEDT [21756] LOG:  background worker "logical replication launcher" (PID 21763) exited with exit code 1
+2019-11-12 12:32:45.257 AEDT [21758] LOG:  shutting down
+2019-11-12 12:32:45.268 AEDT [21756] LOG:  database system is shut down

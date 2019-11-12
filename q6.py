@@ -1,7 +1,6 @@
 import re
 import sys
 import ass3
-import time
 
 conn = ass3.connect()
 cur = conn.cursor()
