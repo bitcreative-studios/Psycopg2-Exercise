@@ -244,3 +244,28 @@
 2019-11-12 12:32:45.257 AEDT [21756] LOG:  background worker "logical replication launcher" (PID 21763) exited with exit code 1
 2019-11-12 12:32:45.257 AEDT [21758] LOG:  shutting down
 2019-11-12 12:32:45.268 AEDT [21756] LOG:  database system is shut down
+2019-11-12 12:34:10.173 AEDT [26757] LOG:  listening on IPv6 address "::1", port 5432
+2019-11-12 12:34:10.174 AEDT [26757] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-11-12 12:34:10.174 AEDT [26757] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-11-12 12:34:10.198 AEDT [26758] LOG:  database system was shut down at 2019-11-12 12:32:45 AEDT
+2019-11-12 12:34:10.202 AEDT [26757] LOG:  database system is ready to accept connections
+2019-11-12 12:44:46.892 AEDT [27086] ERROR:  syntax error at or near "distinct" at character 9
+2019-11-12 12:44:46.892 AEDT [27086] STATEMENT:  select (distinct r.code) 
+	from Rooms r
+	join meetings m on m.room_id = r.id
+	join classes c on c.id = m.class_id
+	join courses co on co.id = c.course_id
+	join terms t on co.term_id = t.id
+	where t.name = '19T3' and r.code like 'K-%'
+	order by r.code
+	;
+2019-11-12 12:45:14.675 AEDT [27086] ERROR:  column "r.code" must appear in the GROUP BY clause or be used in an aggregate function at character 233
+2019-11-12 12:45:14.675 AEDT [27086] STATEMENT:  select count(r.code)
+	from Rooms r
+	join meetings m on m.room_id = r.id
+	join classes c on c.id = m.class_id
+	join courses co on co.id = c.course_id
+	join terms t on co.term_id = t.id
+	where t.name = '19T3' and r.code like 'K-%'
+	order by r.code
+	;
