@@ -9,10 +9,7 @@ def count_usage(end_time, start_time, weeks_binary):
 	start_time = int(start_time/100) + (start_time%100)/60;
 	length = end_time - start_time
 	for idx, val in enumerate(weeks_binary):
-		# print (idx, val, int(room[2][idx]))
-		# wk[idx] = val or int(room[2][idx])
 		result += (length * int(weeks_binary[idx]))
-	# print(result, length)
 	return result;
 
 start_time = time.time()
@@ -36,7 +33,6 @@ count_room = cur1.fetchone()
 count_room = count_room[0]
 cur1.execute("SELECT distinct id FROM Rooms r WHERE r.code ilike 'K-%' order by r.id")
 room = cur1.fetchone()
-# print (count_room)
 
 cur2.execute(
 	"""
@@ -64,7 +60,6 @@ while (i < count_room):
 	# if room i has booking in this term
 	if (tup is None and length == 0):
 		i += 1
-		# print(room[0])#, ", i is", i)
 		room = cur1.fetchone()
 		count += 1
 		continue
@@ -74,11 +69,6 @@ while (i < count_room):
 		length = length / 10
 		if (length < 20):
 			count += 1
-			# go to next room
-			# print(room[0], "under")#, ", next is", tup[0], "i is", i)
-		else:
-			pass
-			# print(room[0], "ok")#, ", next is", tup[0], "i is", i)
 
 		room = cur1.fetchone()
 		i += 1
@@ -88,13 +78,10 @@ while (i < count_room):
 	else:
 		if(tup[5] != term):
 			continue
-		# print("-------comes to", room[0], ", length is", length, ", i is", i, '-----------')
 
 		# if still the record from prev room
 		weeks_binary = tup[3]
 		length += count_usage(tup[1], tup[2], weeks_binary[:10])
-		# if (tup[0] == 100684):
-		# 	print(tup[0], tup[1], tup[2], tup[3], tup[4], tup[5], length)
 		# fetch the next tuple
 		tup = cur2.fetchone()
 
