@@ -3,7 +3,7 @@ import psycopg2
 def connect():
     conn = None
     try:
-        conn = psycopg2.connect("dbname='ass3'")
+        conn = psycopg2.connect("dbname='a3'")
         """
         If you're using your own computer, and not grieg, you should use the line below instead
         with the correct credentials
