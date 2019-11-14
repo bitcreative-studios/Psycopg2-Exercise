@@ -1,8 +1,8 @@
 import sys
-import ass3
+import cs3311
 from collections import defaultdict
 
-conn = ass3.connect()
+conn = cs3311.connect()
 cur = conn.cursor()
 buildings = defaultdict(list)
 
@@ -29,7 +29,7 @@ for tup in cur.fetchall():
 	if (percentage < 50):
 		s = "{} {} is {}% full".format(tup[0], tup[1], percentage)
 		print(" ".join(s.split()))
-		
+
 cur.close()
 conn.close()
 

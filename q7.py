@@ -1,5 +1,5 @@
 import sys
-import ass3
+import cs3311
 import time
 
 
@@ -17,7 +17,7 @@ def count_usage(end_time, start_time, weeks_binary):
 
 start_time = time.time()
 
-conn = ass3.connect()
+conn = cs3311.connect()
 cur1 = conn.cursor()
 cur2 = conn.cursor()
 

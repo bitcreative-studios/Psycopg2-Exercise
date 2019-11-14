@@ -1,5 +1,5 @@
-import ass3
-conn = ass3.connect()
+import cs3311
+conn = cs3311.connect()
 
 cur = conn.cursor()
 cur.execute(

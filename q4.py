@@ -1,8 +1,8 @@
 import sys
-import ass3
+import cs3311
 from collections import defaultdict
 
-conn = ass3.connect()
+conn = cs3311.connect()
 buildings = defaultdict(list)
 prefix = "ENGG"
 prev = None

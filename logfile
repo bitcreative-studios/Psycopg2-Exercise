@@ -570,3 +570,14 @@
 	    left outer JOIN Terms t on co.term_id = t.iwhere total_room.id = 100261 ORDER BY total_room.id;
 2019-11-14 13:05:23.659 AEDT [50008] ERROR:  for SELECT DISTINCT, ORDER BY expressions must appear in select list at character 67
 2019-11-14 13:05:23.659 AEDT [50008] STATEMENT:  SELECT distinct id FROM Rooms r WHERE r.code ilike 'K-%' order by r.code limit 1
+2019-11-14 15:26:38.262 AEDT [48042] LOG:  received fast shutdown request
+2019-11-14 15:26:38.263 AEDT [48042] LOG:  aborting any active transactions
+2019-11-14 15:26:38.263 AEDT [48085] FATAL:  terminating connection due to administrator command
+2019-11-14 15:26:38.264 AEDT [48042] LOG:  background worker "logical replication launcher" (PID 48049) exited with exit code 1
+2019-11-14 15:26:38.265 AEDT [48044] LOG:  shutting down
+2019-11-14 15:26:38.278 AEDT [48042] LOG:  database system is shut down
+2019-11-14 15:40:32.451 AEDT [57022] LOG:  listening on IPv6 address "::1", port 5432
+2019-11-14 15:40:32.451 AEDT [57022] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-11-14 15:40:32.452 AEDT [57022] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-11-14 15:40:32.489 AEDT [57023] LOG:  database system was shut down at 2019-11-14 15:26:38 AEDT
+2019-11-14 15:40:32.497 AEDT [57022] LOG:  database system is ready to accept connections

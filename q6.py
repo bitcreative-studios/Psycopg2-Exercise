@@ -1,8 +1,8 @@
 import re
 import sys
-import ass3
+import cs3311
 
-conn = ass3.connect()
+conn = cs3311.connect()
 cur = conn.cursor()
 
 cur.execute("SELECT weeks, id FROM Meetings")
