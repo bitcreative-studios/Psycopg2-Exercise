@@ -269,3 +269,304 @@
 	where t.name = '19T3' and r.code like 'K-%'
 	order by r.code
 	;
+2019-11-12 21:24:25.478 AEDT [26757] LOG:  received fast shutdown request
+2019-11-12 21:24:25.478 AEDT [26757] LOG:  aborting any active transactions
+2019-11-12 21:24:25.480 AEDT [26757] LOG:  background worker "logical replication launcher" (PID 26764) exited with exit code 1
+2019-11-12 21:24:25.480 AEDT [26759] LOG:  shutting down
+2019-11-12 21:24:25.491 AEDT [26757] LOG:  database system is shut down
+2019-11-13 21:28:22.930 AEDT [43275] LOG:  listening on IPv6 address "::1", port 5432
+2019-11-13 21:28:22.930 AEDT [43275] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-11-13 21:28:22.931 AEDT [43275] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-11-13 21:28:22.957 AEDT [43276] LOG:  database system was shut down at 2019-11-12 21:24:25 AEDT
+2019-11-13 21:28:22.972 AEDT [43275] LOG:  database system is ready to accept connections
+2019-11-13 21:28:28.219 AEDT [43318] ERROR:  relation "room" does not exist at character 126
+2019-11-13 21:28:28.219 AEDT [43318] STATEMENT:  
+		SELECT r.code, (m.end_time-m.start_time) as length, m.weeks_binary, m.day, m.start_time, m.end_time
+		FROM Meetings m
+		JOIN Room r on r.id = m.room_id
+		JOIN Classes c on c.id = m.class_id
+		JOIN Courses co on co.id = c.course_id
+		JOIN Terms t on co.term_id = t.id
+		WHERE t.name = '19T1' and r.code like 'K-%'
+		-- GROUP BY r.code, t.name, m.weeks_binary, m.end_time, m.start_time
+		ORDER BY r.code
+		
+2019-11-13 23:50:02.490 AEDT [45518] ERROR:  column total_room.id does not exist at character 211
+2019-11-13 23:50:02.490 AEDT [45518] STATEMENT:  SELECT total_room.total, m.day, m.start_time, m.end_time, m.room_id, m.weeks_binary
+	FROM Meetings m 
+	JOIN (SELECT count(distinct id) as total
+	      FROM Rooms r
+	      WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	JOIN Classes c on c.id = m.class_id
+	JOIN Courses co on co.id = c.course_id
+	JOIN Terms t on t.id = co.term_id
+	WHERE t.name = '19T1'
+	ORDER BY r.id;
+2019-11-13 23:50:54.323 AEDT [45518] ERROR:  column "r.id" must appear in the GROUP BY clause or be used in an aggregate function at character 115
+2019-11-13 23:50:54.323 AEDT [45518] STATEMENT:  SELECT total_room.total, m.day, m.start_time, m.end_time, m.room_id, m.weeks_binary
+	FROM Meetings m 
+	JOIN (SELECT r.id, count(distinct id) as total
+	      FROM Rooms r
+	      WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	JOIN Classes c on c.id = m.class_id
+	JOIN Courses co on co.id = c.course_id
+	JOIN Terms t on t.id = co.term_id
+	WHERE t.name = '19T1'
+	ORDER BY r.id;
+2019-11-13 23:51:07.931 AEDT [45518] ERROR:  column total_room.total does not exist at character 8
+2019-11-13 23:51:07.931 AEDT [45518] STATEMENT:  SELECT total_room.total, m.day, m.start_time, m.end_time, m.room_id, m.weeks_binary
+	FROM Meetings m 
+	JOIN (SELECT r.id
+	      FROM Rooms r
+	      WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	JOIN Classes c on c.id = m.class_id
+	JOIN Courses co on co.id = c.course_id
+	JOIN Terms t on t.id = co.term_id
+	WHERE t.name = '19T1'
+	ORDER BY r.id;
+2019-11-13 23:51:16.965 AEDT [45518] ERROR:  missing FROM-clause entry for table "r" at character 337
+2019-11-13 23:51:16.965 AEDT [45518] STATEMENT:  SELECT  m.day, m.start_time, m.end_time, m.room_id, m.weeks_binary
+	FROM Meetings m 
+	JOIN (SELECT r.id
+	      FROM Rooms r
+	      WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	JOIN Classes c on c.id = m.class_id
+	JOIN Courses co on co.id = c.course_id
+	JOIN Terms t on t.id = co.term_id
+	WHERE t.name = '19T1'
+	ORDER BY r.id;
+2019-11-13 23:52:32.526 AEDT [45518] ERROR:  syntax error at or near "by" at character 29
+2019-11-13 23:52:32.526 AEDT [45518] STATEMENT:  select * from Rooms ordered by id;
+2019-11-13 23:55:20.248 AEDT [45518] ERROR:  syntax error at or near "Outer" at character 85
+2019-11-13 23:55:20.248 AEDT [45518] STATEMENT:  SELECT  m.day, m.start_time, m.end_time, m.room_id, m.weeks_binary
+	FROM Meetings m 
+	Outer JOIN (SELECT r.id
+	      FROM Rooms r
+	      WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	JOIN Classes c on c.id = m.class_id
+	JOIN Courses co on co.id = c.course_id
+	JOIN Terms t on t.id = co.term_id
+	WHERE t.name = '19T1'
+	ORDER BY total_room.id;
+2019-11-13 23:59:54.813 AEDT [45518] ERROR:  missing FROM-clause entry for table "r" at character 69
+2019-11-13 23:59:54.813 AEDT [45518] STATEMENT:  SELECT  m.day, m.start_time, m.end_time, m.room_id, m.weeks_binary, r.id
+	FROM Meetings m 
+	right Outer JOIN (SELECT r.id
+	      FROM Rooms r
+	      WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	order by r.id
+	;
+2019-11-14 00:03:03.816 AEDT [45518] ERROR:  syntax error at or near "outer" at character 340
+2019-11-14 00:03:03.816 AEDT [45518] STATEMENT:  SELECT  m.day, m.start_time, m.end_time, m.room_id, m.weeks_binary, total_room.id, c.id, co.id, t.id
+	FROM Meetings m 
+	right Outer JOIN (SELECT r.id
+	      FROM Rooms r
+	      WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	left outer JOIN Classes c on c.id = m.class_id
+	left outer JOIN Courses co on co.id = c.course_id
+	outer JOIN Terms t on t.id = co.term_id
+	WHERE t.name = '19T1'
+	ORDER BY total_room.id;
+2019-11-14 00:05:20.339 AEDT [45518] ERROR:  syntax error at or near "." at character 70
+2019-11-14 00:05:20.339 AEDT [45518] STATEMENT:  SELECT  m.day, m.start_time, m.end_time, (m.end_time - m.start_time)m.weeks_binary, total_room.id, c.id, co.id
+	FROM Meetings m 
+	right Outer JOIN (SELECT r.id
+	      FROM Rooms r
+	      WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	left outer JOIN Classes c on c.id = m.class_id
+	left outer JOIN Courses co on co.id = c.course_id
+	ORDER BY total_room.id;
+2019-11-14 00:08:09.502 AEDT [45518] ERROR:  syntax error at or near "'19T1'" at character 393
+2019-11-14 00:08:09.502 AEDT [45518] STATEMENT:  SELECT  m.day, (m.end_time - m.start_time), m.weeks_binary, total_room.id, c.id, co.id, t.id
+	FROM Meetings m 
+	right Outer JOIN (SELECT r.id
+	      FROM Rooms r
+	      WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	left outer JOIN Classes c on c.id = m.class_id
+	left outer JOIN Courses co on co.id = c.course_id
+	left outer JOIN Terms t on co.term_id = t.id
+	WHERE t.name is '19T1' or null
+	ORDER BY total_room.id;
+2019-11-14 00:08:33.704 AEDT [45518] ERROR:  invalid input syntax for type boolean: "" at character 402
+2019-11-14 00:08:33.704 AEDT [45518] STATEMENT:  SELECT  m.day, (m.end_time - m.start_time), m.weeks_binary, total_room.id, c.id, co.id, t.id
+	FROM Meetings m 
+	right Outer JOIN (SELECT r.id
+	      FROM Rooms r
+	      WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	left outer JOIN Classes c on c.id = m.class_id
+	left outer JOIN Courses co on co.id = c.course_id
+	left outer JOIN Terms t on co.term_id = t.id
+	WHERE t.name = '19T1' or ''
+	ORDER BY total_room.id'
+	;
+	';
+2019-11-14 00:08:37.704 AEDT [45518] ERROR:  invalid input syntax for type boolean: "" at character 402
+2019-11-14 00:08:37.704 AEDT [45518] STATEMENT:  SELECT  m.day, (m.end_time - m.start_time), m.weeks_binary, total_room.id, c.id, co.id, t.id
+	FROM Meetings m 
+	right Outer JOIN (SELECT r.id
+	      FROM Rooms r
+	      WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	left outer JOIN Classes c on c.id = m.class_id
+	left outer JOIN Courses co on co.id = c.course_id
+	left outer JOIN Terms t on co.term_id = t.id
+	WHERE t.name = '19T1' or ''
+	ORDER BY total_room.id;
+2019-11-14 00:34:26.818 AEDT [45518] ERROR:  missing FROM-clause entry for table "r" at character 446
+2019-11-14 00:34:26.818 AEDT [45518] STATEMENT:  SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	    left outer JOIN Classes c on c.id = m.class_id
+	    left outer JOIN Courses co on co.id = c.course_id
+	    left outer JOIN Terms t on co.term_id = t.id
+	    where r.id = 100100 ORDER BY total_room.id;
+2019-11-14 00:35:09.018 AEDT [45518] ERROR:  schema "m" does not exist at character 272
+2019-11-14 00:35:09.018 AEDT [45518] STATEMENT:  SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id';
+	'
+	;
+2019-11-14 00:35:13.620 AEDT [45518] ERROR:  schema "m" does not exist at character 272
+2019-11-14 00:35:13.620 AEDT [45518] STATEMENT:  SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id';
+	'
+	;
+2019-11-14 00:35:16.659 AEDT [45518] ERROR:  missing FROM-clause entry for table "t" at character 86
+2019-11-14 00:35:16.659 AEDT [45518] STATEMENT:  SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id;
+2019-11-14 00:36:29.541 AEDT [45518] ERROR:  syntax error at or near "q" at character 1
+2019-11-14 00:36:29.541 AEDT [45518] STATEMENT:  q    SELECT  total_room.id, m.start_time, m.end_time (m.end_time - m.start_time) as length, m.weeks_binary, m.day
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id;
+2019-11-14 00:36:32.980 AEDT [45518] ERROR:  schema "m" does not exist at character 38
+2019-11-14 00:36:32.980 AEDT [45518] STATEMENT:  SELECT  total_room.id, m.start_time, m.end_time (m.end_time - m.start_time) as length, m.weeks_binary, m.day
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id;
+2019-11-14 00:41:46.772 AEDT [43275] LOG:  received fast shutdown request
+2019-11-14 00:41:46.772 AEDT [43275] LOG:  aborting any active transactions
+2019-11-14 00:41:46.773 AEDT [43275] LOG:  background worker "logical replication launcher" (PID 43282) exited with exit code 1
+2019-11-14 00:41:46.774 AEDT [43277] LOG:  shutting down
+2019-11-14 00:41:46.786 AEDT [43275] LOG:  database system is shut down
+2019-11-14 09:45:16.058 AEDT [48042] LOG:  listening on IPv6 address "::1", port 5432
+2019-11-14 09:45:16.058 AEDT [48042] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-11-14 09:45:16.059 AEDT [48042] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-11-14 09:45:16.084 AEDT [48043] LOG:  database system was shut down at 2019-11-14 00:41:46 AEDT
+2019-11-14 09:45:16.091 AEDT [48042] LOG:  database system is ready to accept connections
+2019-11-14 09:45:54.179 AEDT [48085] ERROR:  syntax error at or near """"
+	    SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id;
+	"""" at character 1
+2019-11-14 09:45:54.179 AEDT [48085] STATEMENT:  """
+	    SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id;
+	"""
+	;
+2019-11-14 09:46:00.598 AEDT [48085] ERROR:  missing FROM-clause entry for table "t" at character 86
+2019-11-14 09:46:00.598 AEDT [48085] STATEMENT:  SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id;
+2019-11-14 09:46:12.853 AEDT [48085] ERROR:  missing FROM-clause entry for table "t" at character 86
+2019-11-14 09:46:12.853 AEDT [48085] STATEMENT:  SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	;
+2019-11-14 12:37:13.048 AEDT [48085] ERROR:  syntax error at or near "FROM" at character 63
+2019-11-14 12:37:13.048 AEDT [48085] STATEMENT:  SELECT  *
+	    FROM Meetings m 
+	    
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	    left outer JOIN Classes c on c.id = m.class_id
+	    left outer JOIN Courses co on co.id = c.course_id
+	    left outer JOIN Terms t on co.term_id = t.id
+	    where total_room.id = 100100
+	    ORDER BY total_room.id;
+2019-11-14 12:37:25.308 AEDT [48085] ERROR:  syntax error at or near "qSELECT" at character 1
+2019-11-14 12:37:25.308 AEDT [48085] STATEMENT:  qSELECT  *
+	    FROM Meetings m 
+	    
+	                          
+	                          
+	    left outer JOIN Classes c on c.id = m.class_id
+	    left outer JOIN Courses co on co.id = c.course_id
+	    left outer JOIN Terms t on co.term_id = t.id
+	    where total_room.id = 100100
+	    ORDER BY total_room.id;
+2019-11-14 12:37:26.561 AEDT [48085] ERROR:  missing FROM-clause entry for table "total_room" at character 255
+2019-11-14 12:37:26.561 AEDT [48085] STATEMENT:  SELECT  *
+	    FROM Meetings m 
+	    
+	                          
+	                          
+	    left outer JOIN Classes c on c.id = m.class_id
+	    left outer JOIN Courses co on co.id = c.course_id
+	    left outer JOIN Terms t on co.term_id = t.id
+	    where total_room.id = 100100
+	    ORDER BY total_room.id;
+2019-11-14 12:42:59.662 AEDT [48649] ERROR:  missing FROM-clause entry for table "toal_room" at character 420
+2019-11-14 12:42:59.662 AEDT [48649] STATEMENT:  
+		SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+		FROM Meetings m 
+		right Outer JOIN (SELECT r.id
+		  					FROM Rooms r
+		  					WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+		left outer JOIN Classes c on c.id = m.class_id
+		left outer JOIN Courses co on co.id = c.course_id
+		left outer JOIN Terms t on co.term_id = t.id
+		where total_room.id = 100100 or toal_room.id = 100101
+		ORDER BY total_room.id
+		
+2019-11-14 12:55:31.131 AEDT [48085] ERROR:  syntax error at or near ";" at character 464
+2019-11-14 12:55:31.131 AEDT [48085] STATEMENT:  SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	    left outer JOIN Classes c on c.id = m.class_id
+	    left outer JOIN Courses co on co.id = c.course_id
+	    left outer JOIN Terms t on co.term_id = t.id
+	    ORDER BY total_room.id,
+	;
+2019-11-14 13:01:05.921 AEDT [48085] ERROR:  syntax error at or near "total_room" at character 440
+2019-11-14 13:01:05.921 AEDT [48085] STATEMENT:  SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	    left outer JOIN Classes c on c.id = m.class_id
+	    left outer JOIN Courses co on co.id = c.course_id
+	    left outer JOIN Terms t on co.term_id = t.iwhere total_room.id = 10261 ORDER BY total_room.id;
+2019-11-14 13:01:51.457 AEDT [48085] ERROR:  syntax error at or near "total_room" at character 440
+2019-11-14 13:01:51.457 AEDT [48085] STATEMENT:  SELECT  total_room.id, (m.end_time - m.start_time) as length, m.weeks_binary, m.day, t.name
+	    FROM Meetings m 
+	    right Outer JOIN (SELECT r.id
+	                          FROM Rooms r
+	                          WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
+	    left outer JOIN Classes c on c.id = m.class_id
+	    left outer JOIN Courses co on co.id = c.course_id
+	    left outer JOIN Terms t on co.term_id = t.iwhere total_room.id = 100261 ORDER BY total_room.id;
+2019-11-14 13:05:23.659 AEDT [50008] ERROR:  for SELECT DISTINCT, ORDER BY expressions must appear in select list at character 67
+2019-11-14 13:05:23.659 AEDT [50008] STATEMENT:  SELECT distinct id FROM Rooms r WHERE r.code ilike 'K-%' order by r.code limit 1
