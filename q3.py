@@ -30,7 +30,7 @@ for tup in cur.fetchall():
 	buildings[tup[0]].append(tup[1])
 
 # print out result
-for building, courses in buildings.items():
+for building, courses in sorted(buildings.items()):
 	print(building)
 	for c in courses:
 		print(" {}".format(c))
