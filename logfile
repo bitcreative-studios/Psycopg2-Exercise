@@ -697,3 +697,41 @@
 2019-11-15 13:00:49.814 AEDT [70121] LOG:  background worker "logical replication launcher" (PID 70128) exited with exit code 1
 2019-11-15 13:00:49.814 AEDT [70123] LOG:  shutting down
 2019-11-15 13:00:49.825 AEDT [70121] LOG:  database system is shut down
+2019-11-15 19:27:05.854 AEDT [71877] LOG:  listening on IPv6 address "::1", port 5432
+2019-11-15 19:27:05.854 AEDT [71877] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-11-15 19:27:05.855 AEDT [71877] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-11-15 19:27:05.891 AEDT [71878] LOG:  database system was shut down at 2019-11-15 13:00:49 AEDT
+2019-11-15 19:27:05.912 AEDT [71877] LOG:  database system is ready to accept connections
+2019-11-15 19:54:00.476 AEDT [72876] ERROR:  syntax error at or near "{" at character 328
+2019-11-15 19:54:00.476 AEDT [72876] STATEMENT:  SELECT m.day, s.code, ct.name, m.start_time, m.end_time,m.class_id
+	    FROM Meetings m
+	    JOIN Classes c on m.class_id = c.id
+	    JOIN ClassTypes ct on ct.id = c.type_id
+	    JOIN Courses co on co.id = c.course_id
+	    JOIN Terms t on t.id = co.term_id
+	    JOIN Subjects s on s.id = co.subject_id
+	    WHERE t.name = '19T3' and ({})
+	    group by s.code, m.day, ct.name, m.start_time, m.end_time
+	    ORDER BY m.day, m.start_time;
+2019-11-15 19:54:36.002 AEDT [72876] ERROR:  column "m.class_id" must appear in the GROUP BY clause or be used in an aggregate function at character 57
+2019-11-15 19:54:36.002 AEDT [72876] STATEMENT:  SELECT m.day, s.code, ct.name, m.start_time, m.end_time,m.class_id
+	    FROM Meetings m
+	    JOIN Classes c on m.class_id = c.id
+	    JOIN ClassTypes ct on ct.id = c.type_id
+	    JOIN Courses co on co.id = c.course_id
+	    JOIN Terms t on t.id = co.term_id
+	    JOIN Subjects s on s.id = co.subject_id
+	    WHERE t.name = '19T3' and (s.code = 'COMP3331')
+	    group by s.code, m.day, ct.name, m.start_time, m.end_time
+	    ORDER BY m.day, m.start_time;
+2019-11-15 19:54:58.197 AEDT [72876] ERROR:  column "m.class_id" must appear in the GROUP BY clause or be used in an aggregate function at character 57
+2019-11-15 19:54:58.197 AEDT [72876] STATEMENT:  SELECT m.day, s.code, ct.name, m.start_time, m.end_time,m.class_id
+	    FROM Meetings m
+	    JOIN Classes c on m.class_id = c.id
+	    JOIN ClassTypes ct on ct.id = c.type_id
+	    JOIN Courses co on co.id = c.course_id
+	    JOIN Terms t on t.id = co.term_id
+	    JOIN Subjects s on s.id = co.subject_id
+	    WHERE t.name = '19T3' and (s.code = 'COMP3331')
+	    group by s.code, m.day, ct.name, m.start_time, m.end_time
+	    ORDER BY m.day, m.start_time;

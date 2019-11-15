@@ -1,9 +1,9 @@
 # COMP3311 19T3 Assignment 3
 import sys
 import cs3311
-import time
+# import time
 from collections import defaultdict
-start_time = time.time()
+# start_time = time.time()
 
 conn = cs3311.connect()
 cur = conn.cursor()
@@ -13,12 +13,30 @@ cur = conn.cursor()
 #===================== helper function =====================
 def hours(num):
 	return int(int(num) * 100 + (num - int(num)) * 60)
+
 def printDict(dict):
 	for key, value in dict.items():
 		print(key)
 		for i in value:
 			print(i)
 		print('')
+
+def outputTimetable(timetable):
+	result = []
+	total_hours = 0;
+	for key, value in timetable.items():
+		start_time = -1
+		end_time = -1
+		result.append('  {}'.format(key))
+		for v in value:
+			if (start_time < 0):
+				start_time = int(v[2]/100) + (v[2]%100)/60
+			end_time = int(v[3]/100) + (v[3]%100)/60
+			result.append('    {} {}: {}-{}'.format(v[0], v[1], v[2], v[3]))
+		total_hours += (end_time - start_time + 2)
+
+	print("Total hours: {}".format(total_hours))
+	print('\n'.join(result))	
 #====================================================
 course_string = []
 course_code = []
@@ -52,7 +70,7 @@ courses = [defaultdict(list), defaultdict(list), defaultdict(list)]
 
 # put fetch result into dictionary
 for tup in cur.fetchall():
-	print(tup)
+	# print(tup)
 	timetable[tup[0]].append(tup[1:])
 	# classes_choice[tup[1]].add(tup[5])
 	# courses[course_code.index(tup[1])][tup[2]].append(tup[3:])
@@ -71,19 +89,20 @@ for key, value in timetable.items():
 		if (i[4] == cc[course_code.index(i[0])][i[1]]):
 			timetable_final[key].append(i)
 
-printDict(timetable_final)
-print("----------------")
+# printDict(timetable_final)
+# print("----------------")
 # printDict(classes_choice)
 # for i in range(len(course_code)):
 # 	print(course_code[i])
 # 	printDict(courses[i])
-print(course_code)
-print(cc)
+# print(course_code)
+# print(cc)
 
 cur.close()
 conn.close()
 
+outputTimetable(timetable_final)
 
 
-print("---- {} seconds -----".format(time.time() - start_time))
+# print("---- {} seconds -----".format(time.time() - start_time))
 
