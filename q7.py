@@ -1,6 +1,6 @@
 import sys
 import cs3311
-import time
+# import time
 
 
 def count_usage(end_time, start_time, weeks_binary):
@@ -12,7 +12,7 @@ def count_usage(end_time, start_time, weeks_binary):
 		result += (length * int(weeks_binary[idx]))
 	return result;
 
-start_time = time.time()
+# start_time = time.time()
 
 conn = cs3311.connect()
 cur1 = conn.cursor()
@@ -51,15 +51,12 @@ cur2.execute(
 
 count = 0
 tup = cur2.fetchone()
-prev = tup[0];
 length = 0
 i = 0
-wk = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-while (i < count_room):
+while (room is not None):
 	# if room i has booking in this term
 	if (tup is None and length == 0):
-		i += 1
 		room = cur1.fetchone()
 		count += 1
 		continue
@@ -71,7 +68,6 @@ while (i < count_room):
 			count += 1
 
 		room = cur1.fetchone()
-		i += 1
 		length = 0
 
 

@@ -1,6 +1,8 @@
 import re
 import sys
 import cs3311
+# import time
+# start_time = time.time()
 
 conn = cs3311.connect()
 cur = conn.cursor()
@@ -40,3 +42,5 @@ for tup in cur.fetchall():
 cur.close()
 conn.commit()
 conn.close()
+
+# print("---- {} seconds -----".format(time.time() - start_time))
