@@ -121,8 +121,9 @@ def remove_duplicate(timetable):
 				break
 #====================================================
 course_string = []
-course_code = []
+course_code = ['COMP1511', 'MATH1131']
 if len(sys.argv) > 1:
+	course_code = []
 	for a in sys.argv[1:]:
 		course_string.append("s.code = '" + a + "'")
 		course_code.append(a)
