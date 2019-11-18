@@ -740,3 +740,8 @@
 2019-11-15 22:15:06.851 AEDT [71877] LOG:  background worker "logical replication launcher" (PID 71884) exited with exit code 1
 2019-11-15 22:15:06.851 AEDT [71879] LOG:  shutting down
 2019-11-15 22:15:06.863 AEDT [71877] LOG:  database system is shut down
+2019-11-19 10:48:29.409 AEDT [4190] LOG:  listening on IPv6 address "::1", port 5432
+2019-11-19 10:48:29.409 AEDT [4190] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-11-19 10:48:29.410 AEDT [4190] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-11-19 10:48:29.439 AEDT [4191] LOG:  database system was shut down at 2019-11-18 11:27:25 AEDT
+2019-11-19 10:48:29.454 AEDT [4190] LOG:  database system is ready to accept connections

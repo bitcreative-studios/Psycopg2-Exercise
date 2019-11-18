@@ -1,7 +1,6 @@
 import sys
-import cs3311
+import connection 
 # import time
-
 
 def count_usage(end_time, start_time, weeks_binary):
 	result = 0
@@ -14,7 +13,7 @@ def count_usage(end_time, start_time, weeks_binary):
 
 # start_time = time.time()
 
-conn = cs3311.connect()
+conn = connection.connect()
 cur1 = conn.cursor()
 cur2 = conn.cursor()
 
@@ -37,7 +36,7 @@ room = cur1.fetchone()
 cur2.execute(
 	"""
 		SELECT  total_room.id, m.end_time, m.start_time, m.weeks_binary, m.day, t.name
-		FROM Meetings m 
+		FROM Meetings m
 		JOIN (SELECT r.id
 				FROM Rooms r
 				WHERE r.code ilike 'K-%') as total_room on total_room.id = m.room_id
@@ -81,7 +80,7 @@ while (room is not None):
 		# fetch the next tuple
 		tup = cur2.fetchone()
 
-	
+
 
 
 
@@ -95,6 +94,5 @@ cur2.close()
 conn.close()
 #
 # print("---- {} seconds -----".format(time.time() - start_time))
-
 
 

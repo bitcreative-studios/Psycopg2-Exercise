@@ -1,10 +1,10 @@
-import re
 import sys
-import cs3311
+import connection
+import re
 # import time
 # start_time = time.time()
 
-conn = cs3311.connect()
+conn = connection.connect()
 cur = conn.cursor()
 
 cur.execute("SELECT weeks, id FROM Meetings")

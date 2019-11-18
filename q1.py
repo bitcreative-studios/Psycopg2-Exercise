@@ -1,5 +1,5 @@
-import cs3311
-conn = cs3311.connect()
+import connection
+conn = connection.connect()
 
 cur = conn.cursor()
 cur.execute(
@@ -8,7 +8,7 @@ cur.execute(
 	From Courses c
 	JOIN Subjects s on c.subject_id = s.id
 	JOIN Course_Enrolments ce on c.id = ce.course_id
-	WHERE c.quota > 50 and c.term_id = 5199 
+	WHERE c.quota > 50 and c.term_id = 5199
 	GROUP BY c.id,course_id, s.code
 	ORDER BY s.code
 	"""

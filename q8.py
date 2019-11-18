@@ -1,11 +1,10 @@
-# COMP3311 19T3 Assignment 3
 import sys
-import cs3311
+import connection
 # import time
 from collections import defaultdict
 # start_time = time.time()
 
-conn = cs3311.connect()
+conn = connection.connect()
 cur = conn.cursor()
 
 # TODO
