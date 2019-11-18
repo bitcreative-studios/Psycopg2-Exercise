@@ -735,3 +735,8 @@
 	    WHERE t.name = '19T3' and (s.code = 'COMP3331')
 	    group by s.code, m.day, ct.name, m.start_time, m.end_time
 	    ORDER BY m.day, m.start_time;
+2019-11-15 22:15:06.848 AEDT [71877] LOG:  received fast shutdown request
+2019-11-15 22:15:06.849 AEDT [71877] LOG:  aborting any active transactions
+2019-11-15 22:15:06.851 AEDT [71877] LOG:  background worker "logical replication launcher" (PID 71884) exited with exit code 1
+2019-11-15 22:15:06.851 AEDT [71879] LOG:  shutting down
+2019-11-15 22:15:06.863 AEDT [71877] LOG:  database system is shut down

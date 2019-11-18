@@ -37,6 +37,88 @@ def outputTimetable(timetable):
 
 	print("Total hours: {}".format(total_hours))
 	print('\n'.join(result))	
+
+def clash(start1, end1, start2, end2):
+	if (start2 >= end1 or end2 <= start1):
+		return False
+	else:
+		return True 
+
+# sort timetable according to meeting start time
+def sortTimeTable(timetable):
+	for key, value in timetable.items():
+		timetable[key] = sorted(value, key=lambda c: c[2])
+
+# return the index of the course code in list "course_code"
+def course_index(code):
+	return course_code.index(code)
+
+def clear_clash(timetable):
+	has_clash = 0
+	for key, value in timetable.items():
+		prev = None
+		for v in value:
+			if (prev != None):
+				if (clash(v[2], v[3], prev[2], prev[3])):
+					# print("clash",v,prev)
+					next_class = find_next_class(v[2],v[3],v[0],v[1],v[4])
+					if (next_class != None):
+						remove_class(v[4], value)
+						add_new_class(next_class, timetable)
+
+						has_clash = 1
+						return has_clash
+			prev = v
+	return has_clash
+
+def find_next_class(start, end, code, cType, cId):
+	find = 0
+	prev = None
+	for tup in classes[course_index(code)][cType]:
+		# if find the clash course, select the next course
+		if (find == 1 and prev != None):
+			# if the current class not clash with the src class
+			if (tup[5] != cId and not clash(start,end,tup[3],tup[4])):
+				return tup
+
+		if (find == 0 and tup[5] == cId):
+			find = 1
+			prev = tup
+
+	return None 
+
+# remove class with same id from a list of tuple
+def remove_class(cId,timetable):
+	for tup in timetable:
+		if (tup[-1] == cId):
+			timetable.remove(tup)
+
+def add_new_class(new_class, timetable):
+	c = classes[course_index(new_class[1])][new_class[2]]
+	for tup in c:
+		if (tup[5] == new_class[5]):
+			if(c.index(tup) == (len(c)-1) or c.index(tup) == (len(c)-2)):
+				continue
+			timetable[new_class[0]].append(new_class[1:])
+
+def remove_duplicate(timetable):
+	dup = 0
+	for key, value in timetable.items():
+		while (1):
+			dup = 0
+			prev = None
+			for v in value:
+				if (prev == None):
+					prev = v
+					continue
+
+				if (prev!= None and v == prev):
+					value.remove(v)
+					dup = 1
+				else:
+					prev = v
+			if (dup == 0):
+				break
 #====================================================
 course_string = []
 course_code = []
@@ -64,24 +146,43 @@ cur.execute (
 )
 
 timetable = defaultdict(list)
-# classes_choice = defaultdict(set)
+# initializing three list for three courses
 cc = [{}, {}, {}]
-courses = [defaultdict(list), defaultdict(list), defaultdict(list)]
+classes = [defaultdict(list), defaultdict(list), defaultdict(list)]
 
 # put fetch result into dictionary
 for tup in cur.fetchall():
 	# print(tup)
-	timetable[tup[0]].append(tup[1:])
-	# classes_choice[tup[1]].add(tup[5])
-	# courses[course_code.index(tup[1])][tup[2]].append(tup[3:])
-	if (tup[2] in cc[course_code.index(tup[1])].keys()):
+	day = tup[0]
+	course = tup[1]
+	cType = tup[2]
+	start = tup[3]
+	end = tup[4]
+	cId = tup[5] 
+	timetable[day].append(tup[1:])
+
+	# add the class into list according to class type
+	classes[course_index(course)][cType].append(tup)
+	# if the class has been selectd, ignore, else add id to the corresponding course list
+	if (tup[2] in cc[course_index(tup[1])].keys()):
 		continue
-	cc[course_code.index(tup[1])][tup[2]] = tup[5]
 
-# sort timetable according to meeting start time
-for key, value in timetable.items():
-	timetable[key] = sorted(value, key=lambda c: c[2])
+	else:
+		cc[course_code.index(tup[1])][tup[2]] = tup[5]
 
+
+sortTimeTable(timetable)
+# print("-------------------classes---------------")
+# for course in classes:
+# 	# print(course_code[classes.index(course)])
+# 	for key, value in course.items():
+# 		print(key)
+# 		for v in value:
+# 			print(v)
+# print("----------------end classes------------")
+
+
+# select course and put in final timetable
 timetable_final = defaultdict(list)
 for key, value in timetable.items():
 	for i in value:
@@ -89,20 +190,24 @@ for key, value in timetable.items():
 		if (i[4] == cc[course_code.index(i[0])][i[1]]):
 			timetable_final[key].append(i)
 
+# print("----------timetable_final----------")
 # printDict(timetable_final)
-# print("----------------")
-# printDict(classes_choice)
-# for i in range(len(course_code)):
-# 	print(course_code[i])
-# 	printDict(courses[i])
-# print(course_code)
-# print(cc)
+# print("--------------------------------")
+
+# clear clash
+has_clash = 1
+for i in range(100):
+	has_clash = clear_clash(timetable_final)
+	sortTimeTable(timetable_final)
+	if (has_clash == 0):
+		break
+
+remove_duplicate(timetable_final)
 
 cur.close()
 conn.close()
 
 outputTimetable(timetable_final)
-
 
 # print("---- {} seconds -----".format(time.time() - start_time))
 
