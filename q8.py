@@ -172,7 +172,7 @@ for tup in cur.fetchall():
 		cc[course_code.index(tup[1])][tup[2]] = tup[5]
 
 
-sortTimeTable(timetable)
+# sortTimeTable(timetable)
 # print("-------------------classes---------------")
 # for course in classes:
 # 	# print(course_code[classes.index(course)])
@@ -197,7 +197,7 @@ for key, value in timetable.items():
 
 # clear clash
 has_clash = 1
-for i in range(100):
+for i in range(50):
 	has_clash = clear_clash(timetable_final)
 	sortTimeTable(timetable_final)
 	if (has_clash == 0):
